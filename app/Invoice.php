@@ -30,4 +30,17 @@ class Invoice
         'pending',
         'verified'
     ];
+
+    protected $perPage = 10;
+
+    protected $tax = 0.23;
+
+    public function calkulateFees($total)
+    {
+        if($total) {
+            return $total * $this->tax;
+        }
+
+        return '';
+    }
 }

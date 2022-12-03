@@ -55,7 +55,7 @@ class PostMetaBox extends Invoice
         foreach (array_keys($this->fields()) as $value) {
             if (isset($_POST[$value])) {
                 if ($value == 'invoice_end_date') {
-                    if (date('Y-m-d', strtotime($_POST['invoice_start_date'])) < date('Y-m-d', strtotime($_POST['invoice_end_date']))) {
+                    if (date('Y-m-d', strtotime($_POST['invoice_start_date'])) <= date('Y-m-d', strtotime($_POST['invoice_end_date']))) {
                         update_post_meta($post_id, $value, sanitize_text_field($_POST[$value]));
                     } else {
                         delete_post_meta($post_id, $value);
