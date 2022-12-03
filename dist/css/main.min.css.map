@@ -1,1 +1,1 @@
-{"version":3,"sources":["..\\..\\src\\sass\\main.scss"],"names":[],"mappings":"AAAA,KACI,MAAA,KACA,QAAA","sourcesContent":["body{\r\n    color: blue;\r\n    display: flex;\r\n}\r\n"]}
+{"version":3,"sources":[],"names":[],"mappings":""}

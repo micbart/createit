@@ -1,1 +1,1 @@
-{"version":3,"file":"script.js","sources":["../../src/js/APP/test.js","../../src/js/script.js"],"sourcesContent":["export const test = () => {\r\n    alert('aaa');\r\n}","import { test } from \"./APP/test\";\r\ntest();"],"names":["test","alert"],"mappings":";;;;;IAAO,MAAMA,IAAI,GAAG,MAAM;MACtBC,KAAK,CAAC,KAAK,CAAC,CAAA;IAChB,CAAC;;ICDDD,IAAI,EAAE;;;;;;"}
+{"version":3,"file":"script.js","sources":[],"sourcesContent":[],"names":[],"mappings":";;;;;;;;;"}

@@ -60,14 +60,20 @@ if(!class_exists('Createit')) {
 		public function __construct()
         {
 			$this->createit = 'CreateIT';
-			$this->register_public_styles();
+			$this->app();
+			$this->registerPublicStyles();
 		}
 
-		public function register_public_styles()
+		public function registerPublicStyles()
 		{
 			wp_enqueue_style('courses-woocommerce', plugin_dir_url(__FILE__) . 'dist/css/main.css');
 			wp_enqueue_script('courses-woocommerce', plugin_dir_url(__FILE__) . 'dist/js/script.js', array(), '', true);
 		}
+
+		public function app()
+		{
+			require_once 'app\Loader.php';
+		} 
 	}
 
 	new Createit();
