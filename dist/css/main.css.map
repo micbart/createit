@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/sass/main.scss","main.css"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,aAAA;ACCJ","file":"main.css","sourcesContent":["body{\r\n    color: blue;\r\n    display: flex;\r\n}\r\n","body {\n  color: blue;\n  display: flex;\n}\n\n/*# sourceMappingURL=main.css.map */\n"]}
