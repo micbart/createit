@@ -4,6 +4,7 @@ namespace Createit\App;
 
 use Createit\App\InvoicePostType;
 use Createit\App\PostMetaBox;
+use Createit\App\Api;
 
 class Loader
 {
@@ -16,7 +17,8 @@ class Loader
     private $files = [
         'InvoicePostType.php',
         'Invoice.php',
-        'postMetaBox.php'
+        'PostMetaBox.php',
+        'Api.php'
     ];
 
     public function loadFiles()
@@ -30,6 +32,7 @@ class Loader
     {
         new InvoicePostType();
         new PostMetaBox();
+        new Api();
     }
 }
 
