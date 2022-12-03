@@ -15,6 +15,12 @@ class Invoice
             ],
             'invoice_orders' => [
                 'title' => __('Orders', 'createit'),
+            ],
+            'invoice_start_date' => [
+                'title' => __('Orders', 'createit'),
+            ],
+            'invoice_end_date' => [
+                'title' => __('Orders', 'createit'),
             ]
         ];
     } 

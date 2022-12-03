@@ -18,19 +18,23 @@ class PostMetaBox extends Invoice
 
     public function metaboxCallback($post)
     {
-        wp_nonce_field( 'somerandomstr', '_travelnonce');
+        wp_nonce_field( 'somerandomstr', '_createit');
 
         ?>
         <div class="row">
             <?php
                 echo $this->stausField($post);
+                echo $this->totalField($post);
+                echo $this->ordersField($post);
+                echo $this->startDateField($post);
+                echo $this->endDateField($post);
             ?>
         </div>
         <?php
     }
 
     public function saveMetabox($post_id, $post) {
-        if (!isset($_POST['_travelnonce']) || !wp_verify_nonce($_POST['_travelnonce'], 'somerandomstr')) {
+        if (!isset($_POST['_createit']) || !wp_verify_nonce($_POST['_createit'], 'somerandomstr')) {
             return $post_id;
         }
 
@@ -49,9 +53,16 @@ class PostMetaBox extends Invoice
         }
 
         foreach (array_keys($this->fields()) as $value) {
-
             if (isset($_POST[$value])) {
-                update_post_meta($post_id, $value, sanitize_text_field($_POST[$value]));
+                if ($value == 'invoice_end_date') {
+                    if (date('Y-m-d', strtotime($_POST['invoice_start_date'])) < date('Y-m-d', strtotime($_POST['invoice_end_date']))) {
+                        update_post_meta($post_id, $value, sanitize_text_field($_POST[$value]));
+                    } else {
+                        delete_post_meta($post_id, $value);
+                    }
+                } else {
+                    update_post_meta($post_id, $value, sanitize_text_field($_POST[$value]));
+                }
             } else {
                 delete_post_meta($post_id, $value);
             }
@@ -75,6 +86,50 @@ class PostMetaBox extends Invoice
                 <select name="invoice_status" id="invoice_status">
                     '. $options .'
                 </select>
+            </div>';
+    }
+
+    public function totalField($post)
+    {
+        $field = get_post_meta($post->ID, 'invoice_total', true);
+
+        return 
+            '<div>
+                <div class="label">' . $this->fields()['invoice_total']['title'] . '</div>
+                <input type="number" id="invoice_total" name="invoice_total" value="' . $field . '">
+            </div>';
+    }
+
+    public function ordersField($post)
+    {
+        $field = get_post_meta($post->ID, 'invoice_orders', true);
+
+        return 
+            '<div>
+                <div class="label">' . $this->fields()['invoice_orders']['title'] . '</div>
+                <input type="number" id="invoice_orders" name="invoice_orders" value="' . $field . '">
+            </div>';
+    }
+
+    public function startDateField($post)
+    {
+        $field = get_post_meta($post->ID, 'invoice_start_date', true);
+
+        return 
+            '<div>
+                <div class="label">' . $this->fields()['invoice_start_date']['title'] . '</div>
+                <input type="date" id="invoice_start_date" name="invoice_start_date" value="' . $field . '">
+            </div>';
+    }
+
+    public function endDateField($post)
+    {
+        $field = get_post_meta($post->ID, 'invoice_end_date', true);
+
+        return 
+            '<div>
+                <div class="label">' . $this->fields()['invoice_end_date']['title'] . '</div>
+                <input type="date" id="invoice_end_date" name="invoice_end_date" value="' . $field . '">
             </div>';
     }
 }
