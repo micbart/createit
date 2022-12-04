@@ -133,23 +133,24 @@
   border-bottom: 1px solid #6C7481;
   font-weight: bolder;
 }
-.invoice-table__labels .check {
+.invoice-table .check {
   width: 5%;
 }
-.invoice-table__labels .restaurant {
+.invoice-table .restaurant {
   width: 25%;
 }
-.invoice-table__labels .id,
-.invoice-table__labels .status,
-.invoice-table__labels .start-date,
-.invoice-table__labels .end-date,
-.invoice-table__labels .total,
-.invoice-table__labels .fees,
-.invoice-table__labels .orders {
+.invoice-table .id,
+.invoice-table .status,
+.invoice-table .start-date,
+.invoice-table .end-date,
+.invoice-table .total,
+.invoice-table .fees,
+.invoice-table .orders {
   width: 10%;
 }
 .invoice-table__result {
   margin: 0;
+  padding: 0;
   position: relative;
   min-height: 400px;
 }
@@ -165,6 +166,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.invoice-table__result li {
+  display: flex;
+  padding: 5px 0;
+  border-bottom: 1px solid #F2F3F5;
 }
 
 /*# sourceMappingURL=main.css.map */

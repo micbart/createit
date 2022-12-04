@@ -96,7 +96,9 @@ class Api extends Invoice
         $args = [ 
             'post_type' => 'invoice', 
             'posts_per_page' => $this->perPage,
-            'page' => $query['page'] ?: 1
+            'page' => $query['page'] ?: 1,
+            'orderby' => 'date',
+            'order' => 'DESC',
         ]; 
 
         if ($query['search']) {
@@ -140,20 +142,26 @@ class Api extends Invoice
 
         if ($queryInvoice->have_posts()) {
             foreach ($queryInvoice->posts as $post) {
-                $resultArray[$post->ID] = [ 
+                $resultArray[] = [
+                    'id' => $post->ID,
                     'name' => get_the_title($post->ID), 
-                    'image' => get_the_post_thumbnail($post->ID, 'thumbnail'), 
+                    'image' => get_the_post_thumbnail_url($post->ID, 'thumbnail') ?: '', 
                     'url' => esc_url(get_permalink($post->ID)),
                     'status' => get_post_meta($post->ID, 'invoice_status', true),
                     'startDate' => get_post_meta($post->ID, 'invoice_start_date', true),
                     'endDate' => get_post_meta($post->ID, 'invoice_end_date', true),
                     'total' => get_post_meta($post->ID, 'invoice_total', true),
                     'fees' => $this->calkulateFees(get_post_meta($post->ID, 'invoice_total', true)),  
-                    'order' => get_post_meta($post->ID, 'invoice_orders', true) 
+                    'orders' => get_post_meta($post->ID, 'invoice_orders', true) 
                 ]; 
             }
         }
 
-        return $resultArray; 
+        return [
+            'items' => $resultArray,
+            'currentPage' => intval($query['page']),
+            'maxPage' => ceil($queryInvoice->found_posts / $this->perPage)
+        ];
+         
     } 
 }

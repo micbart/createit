@@ -137,28 +137,29 @@
         list-style: none;
         border-bottom: 1px solid $dark-gray;
         font-weight: $bolder;
+    }
 
-        .check {
-            width: 5%;
-        }
+    .check {
+        width: 5%;
+    }
 
-        .restaurant {
-            width: 25%;
-        }
+    .restaurant {
+        width: 25%;
+    }
 
-        .id,
-        .status,
-        .start-date,
-        .end-date,
-        .total,
-        .fees,
-        .orders {
-            width: 10%;
-        }
+    .id,
+    .status,
+    .start-date,
+    .end-date,
+    .total,
+    .fees,
+    .orders {
+        width: 10%;
     }
 
     &__result {
         margin: 0;
+        padding: 0;
         position: relative;
         min-height: 400px;
 
@@ -178,5 +179,10 @@
             }
         }
 
+        li {
+            display: flex;
+            padding: 5px 0;
+            border-bottom: 1px solid $middle-gray;
+        }
     }
 }
