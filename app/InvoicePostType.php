@@ -7,7 +7,11 @@ class InvoicePostType
     public function __construct()
     {
         add_action('init', [$this, 'registerPostType']);
+        add_action('archive_template', [$this, 'renderArchiveTemplate']);
+        add_action('single_template', [$this, 'renderSingleTemplate']);
     }
+
+    private $postType = 'invoice';
 
     public function registerPostType()
     {
@@ -48,6 +52,23 @@ class InvoicePostType
             ]
         );
 
-        register_post_type('invoice', $args);
+        register_post_type($this->postType, $args);
+    }
+
+    public function renderArchiveTemplate($template)
+    {
+        if (is_post_type_archive($this->postType)) {
+            $template = dirname(__FILE__, 2) . '/public/templates/archive-' . $this->postType . '.php';
+        }
+
+        return $template;
+    }
+
+    public function renderSingleTemplate($template){
+        if ($this->postType === get_post_type()) {
+            $template = dirname(__FILE__, 2) . '/public/templates/single-' . $this->postType . '.php';
+        }
+
+        return $template;
     }
 }
