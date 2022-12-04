@@ -1,8 +1,9 @@
 import { apiInvoice } from "./apiInvoice";
-import { modifyStatus, modifyPage } from "./variables";
+import { modifyPage } from "./variables";
 
-export const sortByStatus = (togglers, resultArea, navArea) => {
-    for (const item of togglers) {
+export const sortByPage = (togglers, resultArea, navArea) => {
+    const test = togglers.querySelectorAll('li a');
+    for (const item of test) {
         item.addEventListener('click', (event) => {
             event.preventDefault();
 
@@ -10,13 +11,12 @@ export const sortByStatus = (togglers, resultArea, navArea) => {
                 return;
             }
 
-            for (const item of togglers) {
+            for (const item of test) {
                 item.classList.remove('active');
             }
 
             item.classList.add('active');
-            modifyPage(1);
-            modifyStatus(item.dataset.status);
+            modifyPage(item.dataset.page);
             apiInvoice(resultArea, navArea);
         })
     }

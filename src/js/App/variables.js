@@ -7,3 +7,15 @@ export const modifyStatus = (value) => {
 export const modifySearch = (value) => {
     search = value;
 }
+
+export const modifyDateStart = (value) => {
+    dateStart = value;
+}
+
+export const modifyDateEnd = (value) => {
+    dateEnd = value;
+}
+
+export const modifyPage = (value) => {
+    page = parseInt(value);
+}

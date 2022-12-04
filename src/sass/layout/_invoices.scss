@@ -33,7 +33,7 @@
 }
 
 #invoice-status {
-    width: 35%;
+    width: 30%;
 
     .toggler-status {
         display: inline-block;
@@ -55,7 +55,7 @@
 }
 
 #invoice-date-piceker {
-    width: 25%;
+    width: 30%;
 }
 
 .invoice-date-piceker__block {
@@ -84,6 +84,17 @@
             border: none;
             background-color: $gray;
         }
+    }
+
+    #invoice-date-piceker--submit {
+        width: 35px;
+        background-color: $orange;
+        border: none;
+        cursor: pointer;
+        background-image: url(../../assets/check.png);
+        background-size: 12px;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 }
 
@@ -183,6 +194,62 @@
             display: flex;
             padding: 5px 0;
             border-bottom: 1px solid $middle-gray;
+        }
+
+        .check {
+            position: relative;
+            cursor: pointer;
+
+            &::before {
+                content: '';
+                display: block;
+                position: relative;
+                margin: auto;
+                width: 14px;
+                height: 14px;
+                border: 1px solid $dark-gray;
+                border-radius: $border-radius;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            &.active::before{
+                background-color: $dark-gray;
+            }
+        }
+    }
+
+    #pagination {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        border-top: 1px solid $middle-gray;
+        align-items: center;
+        min-height: 50px;
+
+        &__nav {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            border: 1px solid $middle-gray;
+
+            li {
+                &:not(:last-child) {
+                   border-right: 1px solid $middle-gray;
+                }
+
+                a {
+                    display: block;
+                    padding: 5px 10px;
+                    text-decoration: none;
+
+                    &.active {
+                        background-color: $middle-gray;
+                    }
+                }
+            }
+
         }
     }
 }

@@ -40,7 +40,7 @@
 }
 
 #invoice-status {
-  width: 35%;
+  width: 30%;
 }
 #invoice-status .toggler-status {
   display: inline-block;
@@ -58,7 +58,7 @@
 }
 
 #invoice-date-piceker {
-  width: 25%;
+  width: 30%;
 }
 
 .invoice-date-piceker__block {
@@ -84,6 +84,16 @@
   outline: none;
   border: none;
   background-color: #F7F8FA;
+}
+.invoice-date-piceker__block #invoice-date-piceker--submit {
+  width: 35px;
+  background-color: #FE940C;
+  border: none;
+  cursor: pointer;
+  background-image: url(../../assets/check.png);
+  background-size: 12px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 #invoice-search {
@@ -171,6 +181,51 @@
   display: flex;
   padding: 5px 0;
   border-bottom: 1px solid #F2F3F5;
+}
+.invoice-table__result .check {
+  position: relative;
+  cursor: pointer;
+}
+.invoice-table__result .check::before {
+  content: "";
+  display: block;
+  position: relative;
+  margin: auto;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #6C7481;
+  border-radius: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.invoice-table__result .check.active::before {
+  background-color: #6C7481;
+}
+.invoice-table #pagination {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-top: 1px solid #F2F3F5;
+  align-items: center;
+  min-height: 50px;
+}
+.invoice-table #pagination__nav {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #F2F3F5;
+}
+.invoice-table #pagination__nav li:not(:last-child) {
+  border-right: 1px solid #F2F3F5;
+}
+.invoice-table #pagination__nav li a {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+.invoice-table #pagination__nav li a.active {
+  background-color: #F2F3F5;
 }
 
 /*# sourceMappingURL=main.css.map */

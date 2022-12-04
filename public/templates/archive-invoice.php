@@ -29,6 +29,7 @@ get_header();
                     <span class="invoices-label"><?php echo __('From', 'createit'); ?></span>
                     <input type="date" id="invoice-date-piceker--start">
                     <input type="date" id="invoice-date-piceker--end">
+                    <button id="invoice-date-piceker--submit" type="submit"></button>
                 </div>
             </div>
 
@@ -60,6 +61,11 @@ get_header();
             <ul id="result-invoice" class="invoice-table__result loading">
                 
             </ul>
+
+            <div id="pagination">
+                <div id="pagination__count"></div>
+                <ul id="pagination__nav"></ul>
+            </div>
         </div>
     </div>
 <?php

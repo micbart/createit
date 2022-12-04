@@ -96,7 +96,7 @@ class Api extends Invoice
         $args = [ 
             'post_type' => 'invoice', 
             'posts_per_page' => $this->perPage,
-            'page' => $query['page'] ?: 1,
+            'paged' => $query['page'] ?: 1,
             'orderby' => 'date',
             'order' => 'DESC',
         ]; 

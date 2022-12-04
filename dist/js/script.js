@@ -29,7 +29,7 @@
       appendPlace.appendChild(template.content.firstChild);
     };
 
-    const removeInvoiceItem = area => {
+    const removeListItem = area => {
       for (const item of area.querySelectorAll('li')) {
         area.removeChild(item);
       }
@@ -46,42 +46,145 @@
     const modifySearch = value => {
       search = value;
     };
+    const modifyDateStart = value => {
+      dateStart = value;
+    };
+    const modifyDateEnd = value => {
+      dateEnd = value;
+    };
+    const modifyPage = value => {
+      page = parseInt(value);
+    };
 
-    const apiInvoice = resultArea => {
+    const checkInvoice = items => {
+      for (const item of items) {
+        item.addEventListener('click', event => {
+          event.preventDefault();
+          item.classList.toggle('active');
+        });
+      }
+    };
+
+    const createPaginationCount = (currentPage, maxPage) => {
+      return `Page ${currentPage} of ${maxPage}`;
+    };
+
+    const createPaginationItem = (data, currentPage, appendPlace) => {
+      let template = document.createElement('template');
+      data = createPaginationHtml(data, currentPage).trim();
+      template.innerHTML = data;
+      appendPlace.appendChild(template.content.firstChild);
+    };
+    const createPaginationHtml = (page, currentPage) => {
+      let className = 'invoice-change-page';
+      if (page == currentPage) {
+        className += ' active';
+      }
+      return `<li><a href="#${page}" class="${className}" data-page="${page}">${page}</a><li>`;
+    };
+
+    const sortByPage = (togglers, resultArea, navArea) => {
+      const test = togglers.querySelectorAll('li a');
+      for (const item of test) {
+        item.addEventListener('click', event => {
+          event.preventDefault();
+          if (item.classList.contains('active')) {
+            return;
+          }
+          for (const item of test) {
+            item.classList.remove('active');
+          }
+          item.classList.add('active');
+          modifyPage(item.dataset.page);
+          apiInvoice(resultArea, navArea);
+        });
+      }
+    };
+
+    const apiInvoice = (resultArea, navArea) => {
       resultArea.classList.add('loading');
-      removeInvoiceItem(resultArea);
+      navArea.style.pointerEvents = 'none';
+      const pagintaiontCount = resultArea.parentNode.querySelector('#pagination__count');
+      const paginationNav = resultArea.parentNode.querySelector('#pagination__nav');
+      removeListItem(resultArea);
+      removeListItem(paginationNav);
       fetch('http://localhost/sklep/wp-json/createit/ivoices/?status=' + status + '&page=' + page + '&search=' + search + '&dateStart=' + dateStart + '&dateEnd=' + dateEnd, {
         method: 'GET'
       }).then(response => response.json()).then(data => {
+        console.log(page);
         for (let el of Object.values(data.items)) {
           createInvoiceItem(el, resultArea);
         }
+        if (data.maxPage > 0) {
+          for (let index = 1; index < data.maxPage + 1; index++) {
+            createPaginationItem(index, data.currentPage, paginationNav);
+          }
+          pagintaiontCount.innerText = createPaginationCount(data.currentPage, data.maxPage);
+        } else {
+          pagintaiontCount.innerText = '';
+        }
       }).then(() => {
         resultArea.classList.remove('loading');
+        checkInvoice(resultArea.querySelectorAll('.check'));
+        navArea.style.pointerEvents = 'auto';
+        sortByPage(paginationNav, resultArea, navArea);
       }).catch(error => {
         console.log(error);
       });
     };
 
-    const sortByStatus = (togglers, resultArea) => {
+    const sortByStatus = (togglers, resultArea, navArea) => {
       for (const item of togglers) {
         item.addEventListener('click', event => {
           event.preventDefault();
+          if (item.classList.contains('active')) {
+            return;
+          }
           for (const item of togglers) {
             item.classList.remove('active');
           }
           item.classList.add('active');
+          modifyPage(1);
           modifyStatus(item.dataset.status);
-          apiInvoice(resultArea);
+          apiInvoice(resultArea, navArea);
         });
       }
     };
 
-    const sortByText = (button, resultArea) => {
+    const sortByText = (button, resultArea, navArea) => {
       button.addEventListener('click', event => {
         event.preventDefault();
-        modifySearch(button.parentNode.querySelector('#invoice-search--field').value);
-        apiInvoice(resultArea);
+        const newSearch = button.parentNode.querySelector('#invoice-search--field').value;
+        if (newSearch === search) {
+          return;
+        }
+        modifyPage(1);
+        modifySearch(newSearch);
+        apiInvoice(resultArea, navArea);
+      });
+    };
+
+    const sortByDate = (button, resultArea, navArea) => {
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        const newDateStart = button.parentNode.querySelector('#invoice-date-piceker--start').value;
+        const newDateEnd = button.parentNode.querySelector('#invoice-date-piceker--end').value;
+        if (dateStart == newDateStart && dateEnd == newDateEnd) {
+          return;
+        }
+        if (newDateStart && !newDateEnd || !newDateStart && newDateEnd) {
+          alert('Correct date');
+          return;
+        }
+        if (newDateStart <= newDateEnd) {
+          modifyPage(1);
+          modifyDateStart(newDateStart);
+          modifyDateEnd(newDateEnd);
+          apiInvoice(resultArea, navArea);
+        } else {
+          alert('Correct date');
+          return;
+        }
       });
     };
 
@@ -91,11 +194,14 @@
         return;
       }
       const resultArea = invoice.querySelector('#result-invoice');
+      const navArea = invoice.querySelector('.invoice-nav');
       const togglersStatus = invoice.querySelectorAll('#invoice-status .toggler-status');
       const buttonTextSearch = invoice.querySelector('#invoice-search--submit');
-      apiInvoice(resultArea);
-      sortByStatus(togglersStatus, resultArea);
-      sortByText(buttonTextSearch, resultArea);
+      const buttonDate = invoice.querySelector('#invoice-date-piceker--submit');
+      apiInvoice(resultArea, navArea);
+      sortByStatus(togglersStatus, resultArea, navArea);
+      sortByText(buttonTextSearch, resultArea, navArea);
+      sortByDate(buttonDate, resultArea, navArea);
     };
 
     initApiInvoice();
