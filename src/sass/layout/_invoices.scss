@@ -1,0 +1,182 @@
+.post-type-archive-invoice {
+    background-color: $gray;
+}
+
+#invoices {
+    margin: 8vh auto;
+    max-width: 1200px;
+    color: $dark-gray;
+    font-size: $content-font;
+}
+
+.title-invoices {
+    &--main{
+        margin: 0 0 2vh;
+        font-size: $title-font;
+        font-weight: $bolder;
+    }
+}
+
+.invoice-nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -1rem;
+    padding: 3vh 0;
+
+    > * {
+        padding: 0 1rem;
+    }
+
+    .invoice-button {
+        height: 100%;
+    }
+}
+
+#invoice-status {
+    width: 35%;
+
+    .toggler-status {
+        display: inline-block;
+        padding: 4px 8px;
+        text-decoration: none;
+        text-transform: uppercase;
+        border-radius: $border-radius;
+
+        &:not(:last-child) {
+            margin-right: 5px;
+        }
+
+        &.active {
+            background-color: $dark-gray;
+            color: $white;
+        }
+
+    }
+}
+
+#invoice-date-piceker {
+    width: 25%;
+}
+
+.invoice-date-piceker__block {
+    display: flex;
+    justify-content: space-between;
+    background-color: $white;
+    border: 1px solid $dark-gray;
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    .invoices-label {
+        display: inline-block;
+        width: 20%;
+        background-color: $middle-gray;
+        padding: 4px 8px;
+    }
+
+    input {
+        padding: 4px 8px;
+        width: 40%;
+        border: none;
+
+        &:focus-visible,
+        &:focus {
+            outline: none;
+            border: none;
+            background-color: $gray;
+        }
+    }
+}
+
+#invoice-search {
+    display: flex;
+    width: 20%;
+    position: relative;
+
+    &--field{
+        padding: 4px 30px 4px 8px;
+        width: 100%;
+        border: none;
+        border: 1px solid $dark-gray;
+        border-radius: $border-radius;
+        background-color: $white;
+
+        &:focus-visible,
+        &:focus {
+            outline: none;
+            background-color: $white;
+        }
+    }
+
+    &--submit {
+        position: absolute;
+        top: 0;
+        right: 1rem;
+        width: 32px;
+        height: 100%;
+        border: none;
+        z-index: 1;
+        background-color: transparent;
+        background-image: url(../../assets/search.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 20px;
+        cursor: pointer;
+    }
+}
+
+.invoice-table {
+    background-color: $white;
+    border: 1px solid $dark-gray;
+    background-color: $white;
+    border-radius: $border-radius;
+
+    &__labels {
+        display: flex;
+        margin: 0;
+        padding: 10px 0;
+        list-style: none;
+        border-bottom: 1px solid $dark-gray;
+        font-weight: $bolder;
+
+        .check {
+            width: 5%;
+        }
+
+        .restaurant {
+            width: 25%;
+        }
+
+        .id,
+        .status,
+        .start-date,
+        .end-date,
+        .total,
+        .fees,
+        .orders {
+            width: 10%;
+        }
+    }
+
+    &__result {
+        margin: 0;
+        position: relative;
+        min-height: 400px;
+
+        &.loading {
+            &::after {
+                content: "";
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                background-image: url(../../assets/loading.svg);
+                background-position: center;
+                background-size: 50px;
+                background-repeat: no-repeat;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+    }
+}
