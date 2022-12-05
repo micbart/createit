@@ -61,13 +61,23 @@ if(!class_exists('Createit')) {
         {
 			$this->createit = 'CreateIT';
 			$this->app();
-			$this->registerPublicStyles();
+			add_action('wp_enqueue_scripts', [$this, 'registerPublicStyles']);
 		}
 
 		public function registerPublicStyles()
 		{
-			wp_enqueue_style('courses-woocommerce', plugin_dir_url(__FILE__) . 'dist/css/main.css');
-			wp_enqueue_script('courses-woocommerce', plugin_dir_url(__FILE__) . 'dist/js/script.js', array(), '', true);
+			wp_enqueue_style('createit-style', plugin_dir_url(__FILE__) . 'dist/css/main.css');
+			wp_enqueue_script('createit-script', plugin_dir_url(__FILE__) . 'dist/js/script.js', [], '', true);
+
+			wp_localize_script(
+				'createit-script',
+				'appCreateit',
+				[
+					'jsonurl' => get_rest_url(),
+					'ajaxurl' => admin_url('admin-ajax.php'),
+					'nonce' => wp_create_nonce('nonce-createit')
+				]
+			);
 		}
 
 		public function app()

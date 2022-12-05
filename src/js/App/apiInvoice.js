@@ -14,12 +14,11 @@ export const apiInvoice = (resultArea,  navArea) => {
     removeListItem(resultArea);
     removeListItem(paginationNav);
 
-    fetch('http://localhost/sklep/wp-json/createit/ivoices/?status='+status+'&page='+page+'&search='+search+'&dateStart='+dateStart+'&dateEnd='+dateEnd, { 
+    fetch(appCreateit.jsonurl+'createit/ivoices/?status='+status+'&page='+page+'&search='+search+'&dateStart='+dateStart+'&dateEnd='+dateEnd, { 
       	method: 'GET', 
     }) 
     .then((response) => response.json()) 
     .then((data) => { 
-        console.log(page);
       	for (let el of Object.values(data.items)) {
         	createInvoiceItem(el, resultArea);
       	} 

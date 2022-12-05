@@ -108,10 +108,9 @@
       const paginationNav = resultArea.parentNode.querySelector('#pagination__nav');
       removeListItem(resultArea);
       removeListItem(paginationNav);
-      fetch('http://localhost/sklep/wp-json/createit/ivoices/?status=' + status + '&page=' + page + '&search=' + search + '&dateStart=' + dateStart + '&dateEnd=' + dateEnd, {
+      fetch(appCreateit.jsonurl + 'createit/ivoices/?status=' + status + '&page=' + page + '&search=' + search + '&dateStart=' + dateStart + '&dateEnd=' + dateEnd, {
         method: 'GET'
       }).then(response => response.json()).then(data => {
-        console.log(page);
         for (let el of Object.values(data.items)) {
           createInvoiceItem(el, resultArea);
         }
@@ -188,6 +187,46 @@
       });
     };
 
+    const ajaxChangeStatus = (resultArea, navArea, ids) => {
+      resultArea.classList.add('loading');
+      navArea.style.pointerEvents = 'none';
+      const data = new FormData();
+      data.append('nonce', appCreateit.nonce);
+      data.append('action', 'createit_change_status');
+      data.append('ids', JSON.stringify(ids));
+      fetch(appCreateit.ajaxurl, {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: data
+      }).then(response => response.json()).then(data => {
+        if (data.success) {
+          modifyPage(1);
+          apiInvoice(resultArea, navArea);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    };
+
+    const changeStatus = (resultArea, navArea, buttonChangeStatus) => {
+      buttonChangeStatus.addEventListener('click', event => {
+        event.preventDefault();
+        const items = resultArea.querySelectorAll('li .check.active');
+        if (!items.length) {
+          alert('Check elements to change');
+          return;
+        }
+        let ids = [];
+        for (const iterator of items) {
+          ids.push(parseInt(iterator.dataset.id));
+        }
+        if (!ids.length) {
+          return;
+        }
+        ajaxChangeStatus(resultArea, navArea, ids);
+      });
+    };
+
     const initApiInvoice = () => {
       const invoice = document.querySelector('#invoices');
       if (!invoice) {
@@ -198,10 +237,12 @@
       const togglersStatus = invoice.querySelectorAll('#invoice-status .toggler-status');
       const buttonTextSearch = invoice.querySelector('#invoice-search--submit');
       const buttonDate = invoice.querySelector('#invoice-date-piceker--submit');
+      const buttonChangeStatus = navArea.querySelector('#invoice-button-paid');
       apiInvoice(resultArea, navArea);
       sortByStatus(togglersStatus, resultArea, navArea);
       sortByText(buttonTextSearch, resultArea, navArea);
       sortByDate(buttonDate, resultArea, navArea);
+      changeStatus(resultArea, navArea, buttonChangeStatus);
     };
 
     initApiInvoice();

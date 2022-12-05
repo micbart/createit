@@ -6,6 +6,7 @@ use Createit\App\InvoicePostType;
 use Createit\App\PostMetaBox;
 use Createit\App\Api;
 use Createit\App\TemplateArchive;
+use Createit\App\ChangeStatus;
 
 class Loader
 {
@@ -20,7 +21,8 @@ class Loader
         'Invoice.php',
         'PostMetaBox.php',
         'Api.php',
-        'TemplateArchive.php'
+        'TemplateArchive.php',
+        'ChangeStatus.php'
     ];
 
     public function loadFiles()
@@ -36,6 +38,7 @@ class Loader
         new PostMetaBox();
         new Api();
         new TemplateArchive();
+        new ChangeStatus();
     }
 }
 
