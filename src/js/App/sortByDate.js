@@ -22,7 +22,7 @@ export const sortByDate = (button, resultArea, navArea) => {
             modifyDateEnd(newDateEnd);
             apiInvoice(resultArea, navArea);
         } else {
-            alert('Correct date');
+            alert('Please correct the date');
             return;
         }
     });
