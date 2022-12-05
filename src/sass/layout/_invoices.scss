@@ -172,7 +172,9 @@
         margin: 0;
         padding: 0;
         position: relative;
-        min-height: 400px;
+        height: 410px;
+        overflow: auto;
+        color: $black;
 
         &.loading {
             &::after {
@@ -192,8 +194,13 @@
 
         li {
             display: flex;
+            align-items: center;
             padding: 5px 0;
             border-bottom: 1px solid $middle-gray;
+
+            &.nothing-found {
+                padding: 5px 10px;
+            }
         }
 
         .check {
@@ -209,14 +216,58 @@
                 height: 14px;
                 border: 1px solid $dark-gray;
                 border-radius: $border-radius;
-                top: 50%;
-                transform: translateY(-50%);
             }
 
             &.active::before{
-                background-color: $dark-gray;
+                background-image: url(../../assets/check.png);
+                background-size: 8px;
+                background-position: center;
+                background-repeat: no-repeat;
             }
         }
+
+        .status {
+            span {
+                display: block;
+                width: 60px;
+                padding: 3px 5px;
+                text-align: center;
+                font-size: $small-font;
+                text-transform: uppercase;
+                border-radius: 15px;
+    
+                &.pending {
+                    background-color: $status-pending;
+                }
+    
+                &.verified {
+                    background-color: $status-verified;
+                    color: $white;
+                }
+    
+                &.ongoing {
+                    background-color: $orange;
+                    color: $white;
+                }
+            }
+        }
+
+        .restaurant {
+            a {
+                text-decoration: none;
+                font-weight: $bolder;
+                display: flex;
+                align-items: center;
+
+                img {
+                    margin-right: 5px;
+                    max-width: 30px;
+                    max-height: 30px;
+                    border-radius: $border-radius;
+                }
+            }
+        }
+
     }
 
     #pagination {

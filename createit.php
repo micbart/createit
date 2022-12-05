@@ -66,8 +66,8 @@ if(!class_exists('Createit')) {
 
 		public function registerPublicStyles()
 		{
-			wp_enqueue_style('createit-style', plugin_dir_url(__FILE__) . 'dist/css/main.css');
-			wp_enqueue_script('createit-script', plugin_dir_url(__FILE__) . 'dist/js/script.js', [], '', true);
+			wp_enqueue_style('createit-style', plugin_dir_url(__FILE__) . 'dist/css/main.min.css');
+			wp_enqueue_script('createit-script', plugin_dir_url(__FILE__) . 'dist/js/script.min.js', [], '', true);
 
 			wp_localize_script(
 				'createit-script',

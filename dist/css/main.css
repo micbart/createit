@@ -162,7 +162,9 @@
   margin: 0;
   padding: 0;
   position: relative;
-  min-height: 400px;
+  height: 410px;
+  overflow: auto;
+  color: #000000;
 }
 .invoice-table__result.loading::after {
   content: "";
@@ -179,8 +181,12 @@
 }
 .invoice-table__result li {
   display: flex;
+  align-items: center;
   padding: 5px 0;
   border-bottom: 1px solid #F2F3F5;
+}
+.invoice-table__result li.nothing-found {
+  padding: 5px 10px;
 }
 .invoice-table__result .check {
   position: relative;
@@ -195,11 +201,44 @@
   height: 14px;
   border: 1px solid #6C7481;
   border-radius: 5px;
-  top: 50%;
-  transform: translateY(-50%);
 }
 .invoice-table__result .check.active::before {
-  background-color: #6C7481;
+  background-image: url(../../assets/check.png);
+  background-size: 8px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.invoice-table__result .status span {
+  display: block;
+  width: 60px;
+  padding: 3px 5px;
+  text-align: center;
+  font-size: 12px;
+  text-transform: uppercase;
+  border-radius: 15px;
+}
+.invoice-table__result .status span.pending {
+  background-color: #E6E7EB;
+}
+.invoice-table__result .status span.verified {
+  background-color: #4CBD8F;
+  color: #ffffff;
+}
+.invoice-table__result .status span.ongoing {
+  background-color: #FE940C;
+  color: #ffffff;
+}
+.invoice-table__result .restaurant a {
+  text-decoration: none;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+}
+.invoice-table__result .restaurant a img {
+  margin-right: 5px;
+  max-width: 30px;
+  max-height: 30px;
+  border-radius: 5px;
 }
 .invoice-table #pagination {
   display: flex;

@@ -19,18 +19,21 @@ export const apiInvoice = (resultArea,  navArea) => {
     }) 
     .then((response) => response.json()) 
     .then((data) => { 
+
+        if (!data.items.length) {
+            resultArea.innerHTML = '<li class="nothing-found">Nothing found</li>';
+            pagintaiontCount.innerText = '';
+            return;
+        }
+
       	for (let el of Object.values(data.items)) {
         	createInvoiceItem(el, resultArea);
       	} 
 
-        if (data.maxPage > 0) {
-            for (let index = 1; index < data.maxPage+1; index++) {
-                createPaginationItem(index, data.currentPage, paginationNav);
-            }
-            pagintaiontCount.innerText = createPaginationCount(data.currentPage, data.maxPage)
-        } else {
-            pagintaiontCount.innerText = '';
+        for (let index = 1; index < data.maxPage+1; index++) {
+            createPaginationItem(index, data.currentPage, paginationNav);
         }
+        pagintaiontCount.innerText = createPaginationCount(data.currentPage, data.maxPage);
     })
     .then(() => { 
       	resultArea.classList.remove('loading');
@@ -41,6 +44,4 @@ export const apiInvoice = (resultArea,  navArea) => {
     .catch((error) => {
       	console.log(error); 
     }); 
-
-
 }

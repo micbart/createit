@@ -145,13 +145,13 @@ class Api extends Invoice
                 $resultArray[] = [
                     'id' => $post->ID,
                     'name' => get_the_title($post->ID), 
-                    'image' => get_the_post_thumbnail_url($post->ID, 'thumbnail') ?: '', 
+                    'image' => get_the_post_thumbnail($post->ID, 'thumbnail') ?: '', 
                     'url' => esc_url(get_permalink($post->ID)),
                     'status' => get_post_meta($post->ID, 'invoice_status', true),
-                    'startDate' => get_post_meta($post->ID, 'invoice_start_date', true),
-                    'endDate' => get_post_meta($post->ID, 'invoice_end_date', true),
-                    'total' => get_post_meta($post->ID, 'invoice_total', true),
-                    'fees' => $this->calkulateFees(get_post_meta($post->ID, 'invoice_total', true)),  
+                    'startDate' => date('d/m/Y', strtotime(get_post_meta($post->ID, 'invoice_start_date', true))),
+                    'endDate' => date('d/m/Y', strtotime(get_post_meta($post->ID, 'invoice_end_date', true))),
+                    'total' => get_post_meta($post->ID, 'invoice_total', true) ?: '0',
+                    'fees' => $this->calkulateFees(get_post_meta($post->ID, 'invoice_total', true)) ?: '0',  
                     'orders' => get_post_meta($post->ID, 'invoice_orders', true) 
                 ]; 
             }

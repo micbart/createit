@@ -43,7 +43,7 @@ class InvoicePostType
             'exclude_from_search' => false,
             'publicly_queryable' => true,
             'capability_type' => 'post',
-            'supports' => ['title'],
+            'supports' => ['title', 'thumbnail'],
             'show_in_rest' => true,
             'menu_icon' => 'dashicons-calendar',
             'rewrite' => [
