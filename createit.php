@@ -82,7 +82,7 @@ if(!class_exists('Createit')) {
 
 		public function app()
 		{
-			require_once 'app\Loader.php';
+			require_once 'app/Loader.php';
 		} 
 	}
 
