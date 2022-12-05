@@ -12,18 +12,18 @@ export const sortByDate = (button, resultArea, navArea) => {
         }
 
         if ((newDateStart && !newDateEnd) || (!newDateStart && newDateEnd)) {
-            alert('Correct date');
-            return;
-        }
-
-        if (newDateStart <= newDateEnd) {
-            modifyPage(1);
-            modifyDateStart(newDateStart);
-            modifyDateEnd(newDateEnd);
-            apiInvoice(resultArea, navArea);
-        } else {
             alert('Please correct the date');
             return;
         }
+
+        if (newDateStart > newDateEnd) {
+            alert('Please correct the date');
+            return;
+        } 
+
+        modifyPage(1);
+        modifyDateStart(newDateStart);
+        modifyDateEnd(newDateEnd);
+        apiInvoice(resultArea, navArea);
     });
 }
