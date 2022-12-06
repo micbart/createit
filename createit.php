@@ -36,6 +36,20 @@ if(!defined('WPINC')) {
  */
 define('createit_VERSION', '1.0.0');
 
+function createitActivation() 
+{
+    add_option('createitActivationRewriteRules', true);
+}
+register_activation_hook(__FILE__, 'createitActivation');
+
+function createitFlushRewriteRules() {
+	if (get_option('createitActivationRewriteRules') && is_admin()) {
+		flush_rewrite_rules();
+		delete_option('createitActivationRewriteRules');
+	}
+}
+add_action('admin_init', 'createitFlushRewriteRules');
+
 if(!class_exists('Createit')) {
 	class Createit
     {
